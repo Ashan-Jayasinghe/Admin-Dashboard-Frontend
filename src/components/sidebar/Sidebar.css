@@ -1,0 +1,125 @@
+/* src/Sidebar.css */
+
+.sidebar {
+  background-color: #2E7D32; /* Dark green background */
+  color: white;
+  height: 100vh;
+  width: 250px; /* Full width when open */
+  position: fixed;
+  transition: width 0.3s ease;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 40px; /* Space for the toggle button */
+}
+
+.sidebar.closed {
+  width: 100px; /* Reduced width when closed */
+}
+
+.toggle-btn {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.5em;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* When sidebar is open, move the toggle button to the top right */
+.sidebar:not(.closed) .toggle-btn {
+  left: unset;
+  right: 10px;
+  transform: unset;
+}
+
+.app-title {
+  font-size: 1.4em;
+  font-weight: bold;
+  color: #FFFFFF;
+  margin-bottom: 20px;
+  margin-top: 70px;
+  text-align: center;
+}
+
+/* Hide the title when the sidebar is closed */
+.sidebar.closed .app-title {
+  display: none;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  width: 100%;
+}
+
+/* Button styling */
+.sidebar-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Default to start when the sidebar is open */
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.sidebar-button:hover {
+  background-color: #388E3C;
+}
+
+.sidebar-button .button-icon {
+  font-size: 1.5em; /* Icon size */
+  margin-right: 10px; /* Spacing between icon and text */
+}
+
+.sidebar-button .button-text {
+  display: block;
+  text-align: center; /* Center text */
+}
+
+/* Add spacing between buttons */
+.sidebar-button + .sidebar-button {
+  margin-top: 15px;
+}
+
+/* When sidebar is closed, center the icon and text inside the button */
+.sidebar.closed .sidebar-button {
+  justify-content: center; /* Center the button content when sidebar is closed */
+}
+
+.sidebar.closed .sidebar-button .button-text {
+  display: none; /* Hide text when sidebar is closed */
+}
+
+.profile-section {
+  text-align: center;
+  margin: 15px 0;
+}
+
+.profile-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+  border: 2px solid #fff;
+}
+
+.user-name {
+  font-size: 1.1em;
+  color: #fff;
+  font-weight: bold;
+}
+
+/* Hide the user name text when the sidebar is closed, but keep the image visible */
+.sidebar.closed .user-name {
+  display: none;
+}
+/* Style for the logout section */
+.logout-section {
+  width: 100%; /* Ensures it stretches across the sidebar */
+}
