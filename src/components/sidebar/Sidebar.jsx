@@ -15,6 +15,8 @@ import {
   FaBars,
   FaSignOutAlt, // Logout icon
 } from "react-icons/fa";
+import { FaSeedling } from "react-icons/fa";
+import { FaSprayCan } from "react-icons/fa";
 
 function Sidebar() {
   const [isOpen, setIsOpen] = useState(true);
@@ -54,6 +56,12 @@ function Sidebar() {
         </li>
         <li>
           <Button icon={FaTools} text="Machinery" isOpen={isOpen} />
+        </li>
+        <li>
+          <Button icon={FaSeedling} text="Planting Materials" isOpen={isOpen} />
+        </li>
+        <li>
+          <Button icon={FaSprayCan} text="Agro Chemicals" isOpen={isOpen} />
         </li>
         <li>
           <Button icon={FaChartBar} text="Reports" isOpen={isOpen} />
