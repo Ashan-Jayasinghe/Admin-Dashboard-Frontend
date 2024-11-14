@@ -1,9 +1,10 @@
 /* src/Sidebar.css */
-body{
-  font-family: po;
+body {
+  font-family: "Poppins", sans-serif;
 }
+
 .sidebar {
-  background-color: #2E7D32; /* Dark green background */
+  background-color: #2e7d32; /* Dark green background */
   color: white;
   height: 100vh;
   width: 300px; /* Full width when open */
@@ -30,6 +31,7 @@ body{
   background: none;
   border: none;
   cursor: pointer;
+  z-index: 10; /* Ensure it's above other content */
 }
 
 /* When sidebar is open, move the toggle button to the top right */
@@ -42,7 +44,7 @@ body{
 .app-title {
   font-size: 1.4em;
   font-weight: bold;
-  color: #FFFFFF;
+  color: #ffffff;
   margin-bottom: 20px;
   margin-top: 70px;
   text-align: center;
@@ -59,7 +61,6 @@ ul {
   width: 100%;
 }
 
-/* Button styling */
 .sidebar-button {
   width: 100%;
   display: flex;
@@ -71,7 +72,7 @@ ul {
 }
 
 .sidebar-button:hover {
-  background-color: #388E3C;
+  background-color: #388e3c;
 }
 
 .sidebar-button .button-icon {
@@ -98,6 +99,10 @@ ul {
   display: none; /* Hide text when sidebar is closed */
 }
 
+.sidebar.closed .sidebar-button .button-icon {
+  margin-right: 0; /* Remove the spacing between icon and text when closed */
+}
+
 .profile-section {
   text-align: center;
   margin: 15px 0;
@@ -121,7 +126,13 @@ ul {
 .sidebar.closed .user-name {
   display: none;
 }
+
 /* Style for the logout section */
 .logout-section {
   width: 100%; /* Ensures it stretches across the sidebar */
+}
+
+/* Adding gap between toggle button and first button when sidebar is closed */
+.sidebar.closed .sidebar-button:first-child {
+  margin-top: 40px; /* Adjust this value to your desired gap */
 }

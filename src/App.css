@@ -1,21 +1,46 @@
 /* src/App.css */
+
+/* Layout of App - Flexbox for Sidebar and Content */
 .App {
   display: flex;
+  height: 100vh;
 }
 
-.main-content {
-  margin-left: 300px;
+.sidebar {
+  width: 300px; /* Adjust the sidebar width */
+  background-color: #2c3e50; /* Sidebar background color */
+  color: white;
   padding: 20px;
-  width: 100%;
-  transition: margin-left 0.3s ease;
+  position: fixed;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: 10;
 }
 
-.sidebar.closed + .main-content {
-  margin-left: 100px;
+/* Main content area */
+.main-content {
+  margin-left: 250px; /* Match sidebar width */
+  padding: 20px;
+  flex-grow: 1;
+  background-color: #ecf0f1; /* Main content background color */
+  overflow-y: auto;
+  transition: margin-left 0.3s ease; /* Smooth transition for mobile */
 }
 
+/* Responsive for smaller screens (Mobile view) */
 @media (max-width: 768px) {
-  .main-content {
-    margin-left: 0;
+  .sidebar {
+    position: static; /* Sidebar will be inline with content */
+    width: 100%; /* Full width for sidebar */
   }
+
+  .main-content {
+    margin-left: 0; /* Reset margin when sidebar is full-width on mobile */
+  }
+}
+
+/* Sidebar closed state - Adjusting the layout if needed */
+.sidebar.closed + .main-content {
+  margin-left: 100px; /* Adjusted if the sidebar is collapsed */
 }

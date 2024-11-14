@@ -30,9 +30,12 @@ function Button({ icon: Icon, text, isOpen }) {
       case "Planting Materials":
         navigate("/planting-materials");
         break;
-        case "Agro Chemicals":
-          navigate("/agro-chemicals");
-          break;
+      case "Agro Chemicals":
+        navigate("/agro-chemicals");
+        break;
+      case "Settings":
+        navigate("/settings");
+        break;
       default:
         break;
     }
