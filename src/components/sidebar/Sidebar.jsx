@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./Sidebar.css";
 import Button from "../button/Button";
 import Avatar from "../avatar/Avatar";
+import axios from "axios";
+import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom"; // Use useNavigate instead of useHistory
 
 import {
@@ -18,7 +20,7 @@ import {
 import { FaSeedling } from "react-icons/fa";
 import { FaSprayCan } from "react-icons/fa";
 
-function Sidebar() {
+function Sidebar({ setIsLoggedIn }) {
   const [isOpen, setIsOpen] = useState(true);
   const toggleSidebar = () => setIsOpen(!isOpen);
 
@@ -26,13 +28,30 @@ function Sidebar() {
   const profileImage = "profile.jpg"; // Replace with actual path
   const navigate = useNavigate(); // For programmatic navigation
 
-  // Logout handler
-  const handleLogout = () => {
-    // Clear user session (You can replace this with your actual logout logic)
-    localStorage.removeItem("userToken"); // Example of clearing session storage
+  const handleLogout = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5001/api/auth/logout",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
 
-    // Redirect to the login page after logging out
-    navigate("/login"); // Replace with your actual login route
+      if (response.data.status === "success") {
+        localStorage.removeItem("token");
+        toast.success("Logged out successfully");
+        setIsLoggedIn(false); // Update login status
+        navigate("/login"); // Redirect to login page
+      } else {
+        toast.error("Error logging out");
+      }
+    } catch (error) {
+      console.error("Error during logout", error);
+      toast.error("An error occurred while logging out");
+    }
   };
 
   return (
@@ -86,5 +105,4 @@ function Sidebar() {
     </div>
   );
 }
-
 export default Sidebar;

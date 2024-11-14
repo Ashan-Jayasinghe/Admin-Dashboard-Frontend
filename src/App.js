@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import Sidebar from "./components/sidebar/Sidebar";
 import { Routes, Route, Navigate } from "react-router-dom";
@@ -15,7 +15,23 @@ import Login from "./pages/Login/Login";
 import { Toaster } from "react-hot-toast";
 
 const App = () => {
-  const isLoggedIn = localStorage.getItem("token"); // Check if user is logged in
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    localStorage.getItem("token") !== null
+  ); // Track login status
+
+  useEffect(() => {
+    // Listen for changes to localStorage and update login state
+    const handleStorageChange = () => {
+      setIsLoggedIn(localStorage.getItem("token") !== null);
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    // Cleanup event listener
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
 
   return (
     <div className="App">
@@ -24,7 +40,8 @@ const App = () => {
       {/* Render the Sidebar and Main Content only for logged-in users */}
       {isLoggedIn ? (
         <div className="dashboard-container">
-          <Sidebar /> {/* Sidebar is always visible */}
+          <Sidebar setIsLoggedIn={setIsLoggedIn} />{" "}
+          {/* Pass setIsLoggedIn to Sidebar */}
           <div className="main-content">
             <Routes>
               <Route path="/home" element={<Home />} />
