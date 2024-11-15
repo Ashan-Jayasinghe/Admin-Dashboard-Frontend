@@ -1,0 +1,26 @@
+.advertisements-list {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(350px, 1fr)
+  ); /* Cards will wrap after 250px */
+  gap: 20px; /* Space between cards */
+  padding: 20px; /* Padding around the grid */
+}
+
+.loading-message,
+.error-message {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.advertisements-container {
+  text-align: center; /* Center text horizontally */
+  padding: 20px; /* Optional: Add padding for better spacing */
+}
+
+.advertisements-container h1,
+.advertisements-container p {
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Optional: Remove default padding */
+}

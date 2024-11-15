@@ -1,0 +1,95 @@
+.advertisement-card {
+  margin: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Aligns content with space between */
+}
+
+.advertisement-description {
+  font-size: 14px;
+  color: #555;
+}
+
+.advertisement-images {
+  margin: 10px 0;
+}
+
+.advertisement-image {
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.advertisement-status {
+  font-weight: bold;
+  padding: 5px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+/* Active status: Green */
+.advertisement-status.active {
+  background-color: #4caf50; /* Green */
+  color: white;
+}
+
+/* Deactivated status: Yellow */
+.advertisement-status.deactivated {
+  background-color: #ffeb3b; /* Yellow */
+  color: black;
+}
+
+/* Expired status: Red */
+.advertisement-status.expired {
+  background-color: #f44336; /* Red */
+  color: white;
+}
+.advertisement-expiry {
+  color: #777;
+}
+
+.image-slide {
+  display: flex;
+  justify-content: center;
+}
+
+.swiper-pagination-bullet {
+  background-color: #1976d2 !important; /* Color for the pagination dots */
+}
+
+button {
+  margin-top: 10px;
+}
+
+.advertisement-card .MuiCardContent-root {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.advertisement-card .advertisement-info {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* Justify content in a row with space between */
+  margin-top: 10px;
+}
+
+.advertisement-card .advertisement-info .MuiTypography-root {
+  flex-basis: 45%; /* Ensure each field takes up ~50% width, so they wrap on smaller screens */
+  margin-bottom: 5px;
+}
+
+.advertisement-card .advertisement-info .MuiTypography-root:nth-child(even) {
+  text-align: right; /* Align alternate fields to the right */
+}
+
+/* Optional: To make sure that each item in advertisement-info wraps and stays aligned */
+@media (max-width: 600px) {
+  .advertisement-card .advertisement-info .MuiTypography-root {
+    flex-basis: 100%; /* Full width for small screens */
+    text-align: left;
+  }
+}

@@ -12,23 +12,47 @@ import Reports from "./pages/reports/Reports";
 import AgroChemicals from "./pages/agroChemicals/AgroChemicals";
 import PlantingMaterials from "./pages/plantingMaterials/PlantingMaterials";
 import Login from "./pages/Login/Login";
+import Signup from "./pages/signup/Signup";
 import { Toaster } from "react-hot-toast";
+
+// Utility to check if token is expired
+const isTokenExpired = (token) => {
+  if (!token) return true;
+  try {
+    const payload = JSON.parse(atob(token.split(".")[1])); // Decode the token payload
+    return payload.exp * 1000 < Date.now(); // Check if current time is past the expiration
+  } catch (e) {
+    console.error("Invalid token:", e);
+    return true;
+  }
+};
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(
     localStorage.getItem("token") !== null
-  ); // Track login status
+  );
 
   useEffect(() => {
-    // Listen for changes to localStorage and update login state
     const handleStorageChange = () => {
       setIsLoggedIn(localStorage.getItem("token") !== null);
     };
 
+    const checkToken = () => {
+      const token = localStorage.getItem("token");
+      if (isTokenExpired(token)) {
+        localStorage.removeItem("token");
+        setIsLoggedIn(false);
+      }
+    };
+
+    // Set interval to periodically check token validity
+    const interval = setInterval(checkToken, 1000 * 30); // Check every minute
+
+    // Add event listener for localStorage changes
     window.addEventListener("storage", handleStorageChange);
 
-    // Cleanup event listener
     return () => {
+      clearInterval(interval); // Clear interval on unmount
       window.removeEventListener("storage", handleStorageChange);
     };
   }, []);
@@ -37,11 +61,9 @@ const App = () => {
     <div className="App">
       <Toaster position="top-right" />
 
-      {/* Render the Sidebar and Main Content only for logged-in users */}
       {isLoggedIn ? (
         <div className="dashboard-container">
-          <Sidebar setIsLoggedIn={setIsLoggedIn} />{" "}
-          {/* Pass setIsLoggedIn to Sidebar */}
+          <Sidebar setIsLoggedIn={setIsLoggedIn} />
           <div className="main-content">
             <Routes>
               <Route path="/home" element={<Home />} />
@@ -56,17 +78,15 @@ const App = () => {
                 path="/planting-materials"
                 element={<PlantingMaterials />}
               />
-              <Route path="*" element={<Navigate to="/home" />} />{" "}
-              {/* Redirect to home if route not found */}
+              <Route path="*" element={<Navigate to="/home" />} />
             </Routes>
           </div>
         </div>
       ) : (
-        // If not logged in, only show the login page
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path="*" element={<Navigate to="/login" />} />{" "}
-          {/* Redirect any unknown routes to login */}
+          <Route path="/signup" element={<Signup />} />
+          <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
       )}
     </div>

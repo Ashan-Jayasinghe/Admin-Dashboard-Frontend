@@ -95,3 +95,17 @@ body {
 .login-button:hover {
   background-color: #45a049;
 }
+
+.signup-link {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.signup-link-text {
+  color: #007bff; /* Blue color */
+  text-decoration: none;
+}
+
+.signup-link-text:hover {
+  text-decoration: underline;
+}
