@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import AdvertisementCard from "../../components/advertisementCard/AdvertisementCard"; // Import AdvertisementCard component
 import SearchBar from "../../components/searchbar/SearchBar"; // Import the SearchBar component
+import AdFilter from "../../components/adFilter/AdFilter"; // Import the AdFilter component
 import "./Fertilizer.css"; // Import the CSS file for styling
 
 const Fertilizer = () => {
@@ -9,7 +10,17 @@ const Fertilizer = () => {
   const [fertilizerAds, setFertilizerAds] = useState([]);
   const [loading, setLoading] = useState(true); // Loading state
   const [error, setError] = useState(null); // Error state
+
+  // State for filter and search
   const [searchTerm, setSearchTerm] = useState(""); // Search term state
+  const [categoryFilter, setCategoryFilter] = useState(""); // Category filter
+  const [subcategoryFilter, setSubcategoryFilter] = useState(""); // Subcategory filter
+  const [statusFilter, setStatusFilter] = useState(""); // Status filter
+  const [addressFilter, setAddressFilter] = useState(""); // Address filter
+
+  // Categories and subcategories for the filter
+  const categories = ["Fertilizer"]; // Example categories
+  const subcategories = ["Organic", "Inrganic", ]; // Example subcategories
 
   // Fetch fertilizer advertisements on component mount
   useEffect(() => {
@@ -33,7 +44,7 @@ const Fertilizer = () => {
             params: { category: "fertilizer" }, // Filter by fertilizer category
           }
         );
-console.log(response.data)
+
         setFertilizerAds(response.data.data); // Set the fetched ads
         setLoading(false); // Stop loading
       } catch (err) {
@@ -45,10 +56,30 @@ console.log(response.data)
     fetchFertilizerAds(); // Fetch data when component mounts
   }, []);
 
-  // Filter advertisements based on search term
-  const filteredFertilizerAds = fertilizerAds.filter((ad) =>
-    ad.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Filter advertisements based on filters and search term
+  const filteredFertilizerAds = fertilizerAds.filter((ad) => {
+    const matchesCategory = categoryFilter
+      ? ad.category === categoryFilter
+      : true;
+    const matchesSubcategory = subcategoryFilter
+      ? ad.subcategory === subcategoryFilter
+      : true;
+    const matchesStatus = statusFilter ? ad.status === statusFilter : true;
+    const matchesAddress = addressFilter
+      ? ad.address.toLowerCase().includes(addressFilter.toLowerCase())
+      : true;
+    const matchesSearchTerm = ad.title
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+
+    return (
+      matchesCategory &&
+      matchesSubcategory &&
+      matchesStatus &&
+      matchesAddress &&
+      matchesSearchTerm
+    );
+  });
 
   if (loading) {
     return <div className="loading-message">Loading fertilizers...</div>;
@@ -65,6 +96,20 @@ console.log(response.data)
 
       {/* Search Bar Component */}
       <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+
+      {/* AdFilter Component */}
+      <AdFilter
+        categoryFilter={categoryFilter}
+        setCategoryFilter={setCategoryFilter}
+        subcategoryFilter={subcategoryFilter}
+        setSubcategoryFilter={setSubcategoryFilter}
+        statusFilter={statusFilter}
+        setStatusFilter={setStatusFilter}
+        addressFilter={addressFilter}
+        setAddressFilter={setAddressFilter}
+        categories={categories}
+        subcategories={subcategories}
+      />
 
       {/* Displaying advertisements as cards */}
       <div className="fertilizer-list">
