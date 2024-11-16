@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import AdvertisementCard from "../../components/advertisementCard/AdvertisementCard"; // Import the AdvertisementCard component
+import SearchBar from "../../components/searchbar/SearchBar"; // Import the SearchBar component
+import AdFilter from "../../components/adFilter/AdFilter"; // Import the AdFilter component
 import "./Advertisements.css"; // Import the CSS file
 
 const Advertisements = () => {
@@ -8,6 +10,18 @@ const Advertisements = () => {
   const [advertisements, setAdvertisements] = useState([]);
   const [loading, setLoading] = useState(true); // State to track loading state
   const [error, setError] = useState(null); // State to track error state
+  const [searchTerm, setSearchTerm] = useState(""); // State to track the search term
+  const [filteredAds, setFilteredAds] = useState([]); // State to hold filtered advertisements
+
+  // Filter states for category, subcategory, status, and address
+  const [categoryFilter, setCategoryFilter] = useState("");
+  const [subcategoryFilter, setSubcategoryFilter] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
+  const [addressFilter, setAddressFilter] = useState("");
+
+  // State to hold all categories and subcategories
+  const [categories, setCategories] = useState([]);
+  const [subcategories, setSubcategories] = useState([]);
 
   // Fetch advertisements when the component mounts
   useEffect(() => {
@@ -30,8 +44,8 @@ const Advertisements = () => {
             },
           }
         );
-
         setAdvertisements(response.data.data); // Set the fetched advertisements in state
+        setFilteredAds(response.data.data); // Initialize filtered ads
         setLoading(false); // Stop loading
       } catch (err) {
         setError("Failed to fetch advertisements");
@@ -41,6 +55,56 @@ const Advertisements = () => {
 
     fetchAdvertisements(); // Call the function to fetch data
   }, []);
+
+  // Fetch categories and subcategories from the advertisements
+  useEffect(() => {
+    const uniqueCategories = [
+      ...new Set(advertisements.map((ad) => ad.category)),
+    ];
+    setCategories(uniqueCategories); // Set unique categories
+
+    // Filter subcategories based on selected category
+    const filteredSubcategories = advertisements
+      .filter((ad) => ad.category === categoryFilter)
+      .map((ad) => ad.subcategory);
+    setSubcategories([...new Set(filteredSubcategories)]); // Set unique subcategories for the selected category
+  }, [advertisements, categoryFilter]);
+
+  // Filter advertisements whenever the search term or filter criteria changes
+  useEffect(() => {
+    const filtered = advertisements.filter((ad) => {
+      const matchesSearch =
+        ad.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        ad.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        ad.subcategory.toLowerCase().includes(searchTerm.toLowerCase());
+
+      const matchesCategory =
+        categoryFilter === "" || ad.category === categoryFilter;
+      const matchesSubcategory =
+        subcategoryFilter === "" || ad.subcategory === subcategoryFilter;
+      const matchesStatus = statusFilter === "" || ad.status === statusFilter;
+      const matchesAddress =
+        addressFilter === "" ||
+        ad.address.toLowerCase().includes(addressFilter.toLowerCase());
+
+      return (
+        matchesSearch &&
+        matchesCategory &&
+        matchesSubcategory &&
+        matchesStatus &&
+        matchesAddress
+      );
+    });
+
+    setFilteredAds(filtered); // Update filtered ads
+  }, [
+    searchTerm,
+    categoryFilter,
+    subcategoryFilter,
+    statusFilter,
+    addressFilter,
+    advertisements,
+  ]);
 
   if (loading) {
     return <div className="loading-message">Loading advertisements...</div>;
@@ -55,10 +119,32 @@ const Advertisements = () => {
       <h1>Advertisements</h1>
       <p>Here you can manage all advertisements.</p>
 
+      {/* Search Bar Component */}
+      <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+
+      {/* Filter Options */}
+      <AdFilter
+        categoryFilter={categoryFilter}
+        setCategoryFilter={setCategoryFilter}
+        subcategoryFilter={subcategoryFilter}
+        setSubcategoryFilter={setSubcategoryFilter}
+        statusFilter={statusFilter}
+        setStatusFilter={setStatusFilter}
+        addressFilter={addressFilter}
+        setAddressFilter={setAddressFilter}
+        categories={categories} // Pass the categories
+        subcategories={subcategories} // Pass the filtered subcategories
+      />
+
+      {/* Displaying filtered advertisements */}
       <div className="advertisements-list">
-        {advertisements.map((ad) => (
-          <AdvertisementCard key={ad.id} ad={ad} />
-        ))}
+        {filteredAds.length === 0 ? (
+          <div className="no-results">No advertisements found</div>
+        ) : (
+          filteredAds.map((ad) => (
+            <AdvertisementCard key={ad.advertisement_id} ad={ad} />
+          ))
+        )}
       </div>
     </div>
   );

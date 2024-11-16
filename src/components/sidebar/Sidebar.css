@@ -1,6 +1,7 @@
 /* src/Sidebar.css */
 body {
   font-family: "Poppins", sans-serif;
+  margin: 0; /* Ensure there's no margin causing overlap */
 }
 
 .sidebar {
