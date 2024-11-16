@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import "./Settings.css";
-import defaultProfilePic from '../../assets/image.png';
+import defaultProfilePic from "../../assets/image.png";
+
 const Settings = () => {
   const [userData, setUserData] = useState({
     username: "",
@@ -11,10 +12,12 @@ const Settings = () => {
     created_at: "",
     updated_at: "",
   });
+
   const [updatedUserData, setUpdatedUserData] = useState({
     username: "",
     email: "",
   });
+
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
@@ -22,6 +25,9 @@ const Settings = () => {
   const [error, setError] = useState(null);
   const [passwordError, setPasswordError] = useState(null);
   const [profilePictureFile, setProfilePictureFile] = useState(null);
+
+  // Use a ref to store the `id` value
+  const idRef = useRef(null);
 
   // Fetch user data on component mount
   useEffect(() => {
@@ -43,6 +49,7 @@ const Settings = () => {
             },
           }
         );
+        console.log(response.data);
 
         if (response.data.status === "success") {
           setUserData(response.data.user);
@@ -50,6 +57,9 @@ const Settings = () => {
             username: response.data.user.username,
             email: response.data.user.email,
           });
+
+          // Store the id in the ref
+          idRef.current = response.data.user.id;
         } else {
           setError("Failed to fetch user data.");
         }
@@ -88,7 +98,7 @@ const Settings = () => {
       formData.append("profilePicture", profilePictureFile);
 
       const response = await axios.put(
-        "http://localhost:5001/api/user/update-profile-picture",
+        "http://localhost:5001/api/auth/image",
         formData,
         {
           headers: {
@@ -119,7 +129,7 @@ const Settings = () => {
       const token = localStorage.getItem("token");
 
       await axios.put(
-        "http://localhost:5001/api/user/update",
+        "http://localhost:5001/api/auth/profile",
         updatedUserData,
         {
           headers: {
@@ -148,7 +158,7 @@ const Settings = () => {
       const token = localStorage.getItem("token");
 
       await axios.put(
-        "http://localhost:5001/api/user/update-password",
+        "http://localhost:5001/api/auth/password",
         {
           currentPassword,
           newPassword,
@@ -171,6 +181,7 @@ const Settings = () => {
 
   const handleDeactivateAccount = async (e) => {
     e.preventDefault();
+
     const password = prompt(
       "Please confirm your password to deactivate your account"
     );
@@ -180,21 +191,36 @@ const Settings = () => {
     try {
       const token = localStorage.getItem("token");
 
-      await axios.delete("http://localhost:5001/api/user/delete", {
-        data: { password },
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      // Check if the token exists before sending the request
+      if (!token) {
+        setError("Token is missing. Please log in again.");
+        return;
+      }
 
-      alert("Account deactivated successfully!");
-      // Redirect user to the login or home page
-      // window.location.href = '/login';
+      // Send the request with the password in the body and Authorization header in the headers
+      const response = await axios.put(
+        `http://localhost:5001/api/auth/account/${idRef.current}`,
+        { password }, // Send password directly in the body
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Pass the token as the Authorization header
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        // Deactivate the account and log out by removing the token from localStorage
+        localStorage.removeItem("token");
+
+        alert("Account deactivated successfully!");
+        // Optionally, redirect user to the login or home page
+        // window.location.href = '/login';  // Uncomment if needed
+      }
     } catch (err) {
-      setError("Failed to deactivate account.");
+      setError("Failed to deactivate account. Please try again.");
+      console.error(err); // Log the error for debugging
     }
   };
-
   if (loading) {
     return <div>Loading user data...</div>;
   }
@@ -206,7 +232,9 @@ const Settings = () => {
   return (
     <div className="settings-container">
       <h1>Profile Settings</h1>
-      <p className="p-heading">Here you can view and update your profile Information.</p>
+      <p className="p-heading">
+        Here you can view and update your profile Information.
+      </p>
       <div className="profile-info">
         <div className="profile-picture-container">
           {userData.image_url ? (
