@@ -101,7 +101,7 @@ const AdvertisementCard = ({ ad }) => {
           color="text.primary"
           className={`advertisement-status 
         ${ad.is_active === 1 && ad.isExpired === false ? "active" : ""}
-        ${ad.is_active === 0 && ad.isExpired === 0 ? "deactivated" : ""}
+        ${ad.is_active === 0 && ad.isExpired === false ? "deactivated" : ""}
         ${ad.isExpired === 1 ? "expired" : ""}`}
         >
           Status:
