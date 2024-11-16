@@ -61,7 +61,7 @@ function Sidebar({ setIsLoggedIn }) {
       </button>
       <h2 className="app-title">{isOpen ? "Govi Nena Admin" : "GN"}</h2>
 
-      <Avatar image={profileImage} name={userName} isOpen={isOpen} />
+      <Avatar className="profile-section" image={profileImage} name={userName} isOpen={isOpen} />
 
       <ul>
         <li>

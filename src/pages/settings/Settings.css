@@ -1,0 +1,192 @@
+/* General Styling */
+.settings-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 30px;
+  font-family: "Arial", sans-serif;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.settings-container h1,
+.settings-container .p-heading {
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 0;
+}
+
+/* Profile Info */
+.profile-info {
+  background-color: #fff;
+  padding: 35px;
+  margin: 0 auto; /* Centers the container */
+  max-width: 800px; /* Reduced width */
+  margin-bottom: 40px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.profile-info h2 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+/* Profile Picture Container */
+.profile-info .profile-picture-container {
+  flex: 1 1 140px; /* Reduced width for profile picture container */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 140px;
+  margin-bottom: 20px;
+}
+
+.profile-info .profile-picture-container img {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Profile Information in Two Columns */
+.profile-info .form-group-prof-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.profile-info .form-group {
+  flex: 1 1 calc(50% - 10px); /* Two columns with space between them */
+  margin-bottom: 20px;
+  max-width: 380px; /* Limits width for each field */
+}
+
+.profile-info label {
+  font-weight: bold;
+  color: #555;
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+}
+
+.profile-info p {
+  margin-top: 5px;
+  font-size: 1.1rem;
+  color: #666;
+}
+
+/* Form Styling */
+form {
+  background-color: #fff;
+  padding: 30px;
+  margin-bottom: 40px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+form h2 {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="file"] {
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: #333;
+}
+
+button {
+  padding: 12px 24px;
+  border: none;
+  background-color: #4caf50;
+  color: white;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Error Handling */
+.error {
+  color: #d9534f;
+  font-size: 1rem;
+  margin-top: 12px;
+  font-weight: bold;
+}
+
+.deactivate-btn {
+  display: block;
+  width: 100%;
+  padding: 14px 24px;
+  background-color: #f44336;
+  color: white;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 8px;
+  text-align: center;
+  margin-top: 30px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.deactivate-btn:hover {
+  background-color: #e53935;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .settings-container {
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  .profile-info {
+    padding: 25px;
+    width: 90%; /* Adjust width for smaller screens */
+  }
+
+  .profile-info .form-group-prof-info {
+    flex-direction: column; /* Stack the profile information vertically */
+  }
+
+  .profile-info .form-group {
+    width: 100%; /* Full width for all fields on small screens */
+    margin-bottom: 20px;
+  }
+
+  .profile-info .profile-picture-container {
+    margin-bottom: 20px;
+  }
+}
