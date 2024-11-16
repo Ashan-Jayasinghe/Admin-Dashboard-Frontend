@@ -20,7 +20,7 @@ const Fertilizer = () => {
 
   // Categories and subcategories for the filter
   const categories = ["Fertilizer"]; // Example categories
-  const subcategories = ["Organic", "Inrganic", ]; // Example subcategories
+  const subcategories = ["Organic", "Inorganic"]; // Example subcategories
 
   // Fetch fertilizer advertisements on component mount
   useEffect(() => {
@@ -44,7 +44,7 @@ const Fertilizer = () => {
             params: { category: "fertilizer" }, // Filter by fertilizer category
           }
         );
-
+        console.log(response.data);
         setFertilizerAds(response.data.data); // Set the fetched ads
         setLoading(false); // Stop loading
       } catch (err) {
@@ -56,15 +56,25 @@ const Fertilizer = () => {
     fetchFertilizerAds(); // Fetch data when component mounts
   }, []);
 
+  // Compute status for each advertisement based on logic
+  const computeStatus = (ad) => {
+    if (ad.isExpired) return "expired";
+    if (ad.is_active === 1) return "active";
+    if (ad.is_active === 0) return "deactivated";
+    return "unknown";
+  };
+
   // Filter advertisements based on filters and search term
   const filteredFertilizerAds = fertilizerAds.filter((ad) => {
+    const status = computeStatus(ad); // Compute status dynamically
+
     const matchesCategory = categoryFilter
       ? ad.category === categoryFilter
       : true;
     const matchesSubcategory = subcategoryFilter
       ? ad.subcategory === subcategoryFilter
       : true;
-    const matchesStatus = statusFilter ? ad.status === statusFilter : true;
+    const matchesStatus = statusFilter ? status === statusFilter : true;
     const matchesAddress = addressFilter
       ? ad.address.toLowerCase().includes(addressFilter.toLowerCase())
       : true;

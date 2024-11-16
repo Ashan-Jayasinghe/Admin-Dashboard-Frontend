@@ -56,6 +56,14 @@ const Advertisements = () => {
     fetchAdvertisements(); // Call the function to fetch data
   }, []);
 
+  // Compute status for each advertisement based on logic
+  const computeStatus = (ad) => {
+    if (ad.isExpired) return "expired";
+    if (ad.is_active === 1) return "active";
+    if (ad.is_active === 0) return "deactivated";
+    return "unknown";
+  };
+
   // Fetch categories and subcategories from the advertisements
   useEffect(() => {
     const uniqueCategories = [
@@ -73,6 +81,8 @@ const Advertisements = () => {
   // Filter advertisements whenever the search term or filter criteria changes
   useEffect(() => {
     const filtered = advertisements.filter((ad) => {
+      const status = computeStatus(ad); // Compute status dynamically
+
       const matchesSearch =
         ad.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         ad.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -82,7 +92,7 @@ const Advertisements = () => {
         categoryFilter === "" || ad.category === categoryFilter;
       const matchesSubcategory =
         subcategoryFilter === "" || ad.subcategory === subcategoryFilter;
-      const matchesStatus = statusFilter === "" || ad.status === statusFilter;
+      const matchesStatus = statusFilter ? status === statusFilter : true;
       const matchesAddress =
         addressFilter === "" ||
         ad.address.toLowerCase().includes(addressFilter.toLowerCase());

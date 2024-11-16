@@ -72,8 +72,8 @@ const AdFilter = ({
         >
           <option value="">Select Status</option>
           <option value="active">Active</option>
-          <option value="inactive">Inactive</option>
-          <option value="pending">Pending</option>
+          <option value="deactivated">Deactivated</option>
+          <option value="expired">Expired</option>
         </select>
       </div>
 
