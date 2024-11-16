@@ -1,0 +1,30 @@
+/* Container for Machinery Ads page */
+.machinery-container {
+  text-align: center;
+  padding: 20px; /* Optional: Add padding for better spacing */
+}
+
+/* List of all machinery items */
+.machinery-list {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(350px, 1fr)
+  ); /* Cards will wrap after 350px */
+  gap: 20px; /* Space between cards */
+  padding: 20px; /* Padding around the grid */
+}
+
+/* Loading and error messages */
+.loading-message,
+.error-message {
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Container title and description */
+.machinery-container h1,
+.machinery-container p {
+  margin: 0;
+  padding: 0;
+}
