@@ -20,7 +20,7 @@ const AgroChemicals = () => {
 
   // Categories and subcategories for the filter
   const categories = ["Agro Chemicals"]; // Example categories
-  const subcategories = ["Herbicides", "Pesticides", "Fungicides", "Other"]; // Example subcategories
+  const subcategories = ["Pesticides","Plant Growth Regulators"]; // Example subcategories
 
   // Fetch agro-chemical advertisements on component mount
   useEffect(() => {
@@ -41,7 +41,7 @@ const AgroChemicals = () => {
             headers: {
               Authorization: `Bearer ${token}`,
             },
-            params: { category: "agro-chemicals" }, // Filter by agro-chemicals category
+            params: { category: "agro chemicals" }, // Filter by agro-chemicals category
           }
         );
         console.log(response.data);
