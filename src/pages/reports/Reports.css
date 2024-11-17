@@ -1,0 +1,147 @@
+/* Basic styles for the reports page */
+.reports-container {
+  margin: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.reports-container h1 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.reports-container p {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table th,
+table td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+table th {
+  background-color: #4caf50;
+  color: white;
+}
+
+table td {
+  background-color: #fff;
+}
+
+table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+table tr:hover {
+  background-color: #ddd;
+}
+
+/* Button styling */
+button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition:
+    background-color 0.3s,
+    transform 0.2s ease;
+  margin: 5px;
+}
+
+/* Status button styling */
+.status-btn {
+  width: 160px;
+}
+
+.status-btn.pending {
+  background-color: #ffa500; /* Orange for pending */
+  color: white;
+}
+
+.status-btn.reviewed {
+  background-color: #4caf50; /* Green for reviewed */
+  color: white;
+}
+
+/* Hover effect for status buttons */
+.status-btn:hover {
+  transform: scale(1.05);
+}
+
+/* View Ad button styling */
+.view-ad-btn {
+  background-color: #007bff; /* Blue for View Ad */
+  color: white;
+}
+
+.view-ad-btn:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  transform: scale(1.05);
+}
+
+/* Adding focus outline for accessibility */
+button:focus {
+  outline: 2px solid #004085; /* Dark blue outline */
+  outline-offset: 2px;
+}
+
+/* Optional: for disabled buttons */
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Handling no reports message */
+.no-reports {
+  text-align: center;
+  color: #999;
+  font-size: 1.1rem;
+}
+
+/* Loading and error messages */
+.loading,
+.error {
+  text-align: center;
+  font-size: 1.2rem;
+  margin-top: 20px;
+  color: #888;
+}
+
+/* Media query for responsiveness */
+@media (max-width: 768px) {
+  table th,
+  table td {
+    padding: 8px;
+  }
+
+  table th {
+    font-size: 0.9rem;
+  }
+
+  table td {
+    font-size: 0.9rem;
+  }
+
+  /* Adjust button sizes on smaller screens */
+  .status-btn,
+  .view-ad-btn {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+}
