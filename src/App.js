@@ -14,6 +14,7 @@ import PlantingMaterials from "./pages/plantingMaterials/PlantingMaterials";
 import Login from "./pages/Login/Login";
 import Signup from "./pages/signup/Signup";
 import { Toaster } from "react-hot-toast";
+import AnalyticsDashboard from "./pages/analyticsDashboard/AnalyticsDashboard";
 
 // Utility to check if token is expired
 const isTokenExpired = (token) => {
@@ -78,6 +79,7 @@ const App = () => {
                 path="/planting-materials"
                 element={<PlantingMaterials />}
               />
+              <Route path="/analytics" element={<AnalyticsDashboard/>}/>
               <Route path="*" element={<Navigate to="/home" />} />
             </Routes>
           </div>

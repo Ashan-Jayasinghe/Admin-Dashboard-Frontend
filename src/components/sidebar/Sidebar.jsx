@@ -15,7 +15,8 @@ import {
   FaChartBar,
   FaTools,
   FaBars,
-  FaSignOutAlt, // Logout icon
+  FaSignOutAlt,
+  FaChartPie
 } from "react-icons/fa";
 import { FaSeedling } from "react-icons/fa";
 import { FaSprayCan } from "react-icons/fa";
@@ -66,6 +67,9 @@ function Sidebar({ setIsLoggedIn }) {
       <ul>
         <li>
           <Button icon={FaHome} text="Home" isOpen={isOpen} />
+        </li>
+        <li>
+          <Button icon={FaChartPie} text="Analytics" isOpen={isOpen} />
         </li>
         <li>
           <Button icon={FaAd} text="All Advertisements" isOpen={isOpen} />

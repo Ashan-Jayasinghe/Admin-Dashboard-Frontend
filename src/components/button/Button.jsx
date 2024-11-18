@@ -12,6 +12,9 @@ function Button({ icon: Icon, text, isOpen }) {
       case "Home":
         navigate("/home");
         break;
+        case "Analytics":
+          navigate("/analytics");
+          break;
       case "All Advertisements":
         navigate("/advertisements");
         break;

@@ -1,0 +1,120 @@
+/* Stats Section */
+
+h1 {
+  text-align: center;
+  color: #66bb6a;
+}
+
+p.subtext {
+  text-align: center;
+}
+p.TU-p {
+  text-align: center;
+  padding: 20px;
+}
+.stats-container {
+  display: flex;
+  justify-content: space-between; /* Distribute space between cards */
+  gap: 20px; /* Space between cards */
+  padding: 20px;
+  flex-wrap: wrap; /* Allows wrapping to the next line on smaller screens */
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  flex: 1 1 18%; /* Each card takes 18% of the available space */
+  min-width: 200px; /* Minimum width for each card */
+  max-width: 250px; /* Max width for each card */
+  transition: transform 0.3s ease;
+}
+
+.card h4 {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.card p {
+  font-size: 24px;
+  font-weight: bold;
+  color: #4caf50; /* Adjust the color as needed */
+}
+
+.card:hover {
+  transform: translateY(-5px); /* Hover effect */
+}
+
+/* Charts Section */
+.charts {
+  margin-top: 30px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px; /* Add spacing between the charts */
+}
+
+.chart-container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+/* Add a specific size for Pie Chart */
+.pie-chart-container {
+  max-width: 350px; /* Adjust the width as needed */
+  height: 350px; /* Adjust the height as needed */
+  margin: 0 auto; /* Center the pie chart */
+}
+
+h3 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+/* For Larger Screens (Grid Layout) */
+@media (min-width: 768px) {
+  .charts {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two charts in a row */
+    gap: 30px;
+  }
+
+  .chart-container {
+    margin-bottom: 0; /* Reset margin in grid layout */
+  }
+}
+
+/* For Extra Large Screens */
+@media (min-width: 1024px) {
+  .charts {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+}
+
+/* For Smaller Screens (Mobile Devices) */
+@media (max-width: 768px) {
+  .stats-container {
+    justify-content: center; /* Center cards on smaller screens */
+  }
+
+  .card {
+    flex: 1 1 45%; /* Take 45% width on smaller screens */
+    margin: 10px 0; /* Add margin for spacing between cards */
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    flex: 1 1 100%; /* Take full width on very small screens */
+    margin: 10px 0;
+  }
+}
