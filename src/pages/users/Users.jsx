@@ -11,6 +11,8 @@ const Users = () => {
   const [deactivationReason, setDeactivationReason] = useState("");
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [page, setPage] = useState(1); // Page state to keep track of current page
+  const [totalPages, setTotalPages] = useState(1); // Total pages for pagination
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,7 +25,7 @@ const Users = () => {
         }
 
         const response = await axios.get(
-          "http://localhost:5001/api/users/user-info",
+          `http://localhost:5001/api/users/user-info?page=${page}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -32,6 +34,7 @@ const Users = () => {
         );
 
         setUsers(response.data.data);
+        setTotalPages(response.data.totalPages); // Assuming response provides totalPages
         setLoading(false);
       } catch (err) {
         setError(err.response?.data?.message || "Failed to fetch users");
@@ -40,7 +43,7 @@ const Users = () => {
     };
 
     fetchUsers();
-  }, []);
+  }, [page]); // Depend on page for re-fetching data
 
   const viewAds = (userId) => {
     navigate(`/users/${userId}/ads`);
@@ -123,6 +126,19 @@ const Users = () => {
     }
   };
 
+  const handlePageChange = (newPage) => {
+    // Ensure the page number is within valid range
+    const validPage = Math.max(1, Math.min(newPage, totalPages));
+    setPage(validPage);
+  };
+
+  useEffect(() => {
+    // If page is invalid, set it to 1
+    if (page <= 0 || page > totalPages) {
+      setPage(1);
+    }
+  }, [page, totalPages]);
+
   if (loading) return <p>Loading users...</p>;
   if (error) return <p>{error}</p>;
 
@@ -189,6 +205,25 @@ const Users = () => {
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Pagination Controls */}
+      <div className="pagination">
+        <button
+          onClick={() => handlePageChange(page - 1)}
+          disabled={page === 1}
+        >
+          Previous
+        </button>
+        <span>
+          Page {page} of {totalPages}
+        </span>
+        <button
+          onClick={() => handlePageChange(page + 1)}
+          disabled={page === totalPages}
+        >
+          Next
+        </button>
       </div>
 
       {/* Modal for deactivation reason */}
