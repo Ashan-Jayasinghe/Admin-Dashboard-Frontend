@@ -1,0 +1,193 @@
+/* Container for the user cards */
+.users-container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 20px;
+  text-align: center;
+}
+
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 4 cards per row */
+  gap: 20px; /* Space between cards */
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* Individual card styles */
+.user-card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+.user-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Card header (Avatar section) */
+.card-header {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.user-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.no-avatar {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ccc;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 14px;
+}
+
+/* Card body */
+.card-body {
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.card-body h3 {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Card footer (Buttons section) */
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.btn {
+  padding: 8px 15px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.view-ads {
+  background-color: #4caf50;
+  color: white;
+}
+
+.deactivate {
+  background-color: #f44336;
+  color: white;
+}
+
+.reactivate {
+  background-color: #2196f3;
+  color: white;
+}
+
+.delete {
+  background-color: #9e9e9e;
+  color: white;
+}
+
+.btn:hover {
+  opacity: 0.8;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Modal */
+.modal {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.modal h2 {
+  margin-bottom: 20px;
+}
+
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Pagination Controls */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  padding: 8px 15px;
+  margin: 0 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #f0f0f0;
+  font-size: 14px;
+}
+
+.pagination button:hover {
+  background-color: #ddd;
+}
+
+.pagination .active {
+  background-color: #4caf50;
+  color: white;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 1200px) {
+  .cards-container {
+    grid-template-columns: repeat(
+      2,
+      1fr
+    ); /* 3 cards per row for large tablets */
+  }
+}
+
+@media (max-width: 1024px) {
+  .cards-container {
+    grid-template-columns: repeat(2, 1fr); /* 2 cards per row for tablets */
+  }
+}
+
+@media (max-width: 600px) {
+  .cards-container {
+    grid-template-columns: 1fr; /* 1 card per row for mobile devices */
+  }
+}
