@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Sidebar.css";
 import Button from "../button/Button";
 import Avatar from "../avatar/Avatar";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { useNavigate } from "react-router-dom"; // Use useNavigate instead of useHistory
-
+import { useNavigate } from "react-router-dom";
 import {
   FaHome,
   FaAd,
@@ -16,18 +15,50 @@ import {
   FaTools,
   FaBars,
   FaSignOutAlt,
-  FaChartPie
+  FaChartPie,
 } from "react-icons/fa";
 import { FaSeedling } from "react-icons/fa";
 import { FaSprayCan } from "react-icons/fa";
 
 function Sidebar({ setIsLoggedIn }) {
   const [isOpen, setIsOpen] = useState(true);
+  const [profileImage, setProfileImage] = useState(""); // State for profile image
+  const [userName, setUserName] = useState(""); // State for user name
+  const navigate = useNavigate();
+
+  // Toggle sidebar open/closed
   const toggleSidebar = () => setIsOpen(!isOpen);
 
-  const userName = "John Doe";
-  const profileImage = "profile.jpg"; // Replace with actual path
-  const navigate = useNavigate(); // For programmatic navigation
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+          return;
+        }
+
+        const response = await axios.get(
+          "http://localhost:5001/api/auth/profile",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (response.data.status === "success") {
+          setUserName(response.data.user.username);
+          setProfileImage(response.data.user.image_url || "profile.jpg"); // Set default profile image if none exists
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        toast.error("Failed to load user data");
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -44,8 +75,8 @@ function Sidebar({ setIsLoggedIn }) {
       if (response.data.status === "success") {
         localStorage.removeItem("token");
         toast.success("Logged out successfully");
-        setIsLoggedIn(false); // Update login status
-        navigate("/login"); // Redirect to login page
+        setIsLoggedIn(false);
+        navigate("/login");
       } else {
         toast.error("Error logging out");
       }
@@ -62,7 +93,12 @@ function Sidebar({ setIsLoggedIn }) {
       </button>
       <h2 className="app-title">{isOpen ? "Govi Nena Admin" : "GN"}</h2>
 
-      <Avatar className="profile-section" image={profileImage} name={userName} isOpen={isOpen} />
+      <Avatar
+        className="profile-section"
+        image={profileImage}
+        name={userName}
+        isOpen={isOpen}
+      />
 
       <ul>
         <li>
@@ -97,7 +133,6 @@ function Sidebar({ setIsLoggedIn }) {
         </li>
       </ul>
 
-      {/* Logout Button */}
       <div className="logout-section">
         <button className="sidebar-button" onClick={handleLogout}>
           <span className="button-icon">
@@ -109,4 +144,5 @@ function Sidebar({ setIsLoggedIn }) {
     </div>
   );
 }
+
 export default Sidebar;

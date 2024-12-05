@@ -1,14 +1,12 @@
-// src/components/Avatar.js
+import React from "react";
+import "./Avatar.css";
 
-import React from 'react';
-import './Avatar.css';
-
-function Avatar({ image, name, isOpen }) {
+function Avatar(props) {
   return (
-    isOpen && (
+    props.isOpen && (
       <div className="profile-section-avatar">
-        <img src={image} alt="Profile" className="profile-image" />
-        <p className="user-name">{name}</p>
+        <img src={props.image} alt="Profile" className="profile-image" />
+        <p className="user-name">{props.name}</p>
       </div>
     )
   );
